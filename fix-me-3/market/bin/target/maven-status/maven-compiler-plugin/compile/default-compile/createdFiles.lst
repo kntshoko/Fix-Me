@@ -1,0 +1,6 @@
+com\fixme\Auth.class
+com\fixme\controlers\Colour.class
+com\fixme\controlers\MysqlConnect.class
+com\fixme\controlers\Colour$out.class
+com\fixme\MarketHandler.class
+com\fixme\Market.class

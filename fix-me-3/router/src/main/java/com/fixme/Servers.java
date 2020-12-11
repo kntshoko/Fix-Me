@@ -6,12 +6,17 @@ import java.nio.channels.AsynchronousServerSocketChannel;
 
 public class Servers implements Runnable {
     private  int port;
-    public Servers(int port) {
+
+    ConnectorsLists connectorsLists = null;
+    public Servers(int port, ConnectorsLists connectorsLists) {
         this.port = port;
+        this.connectorsLists =  connectorsLists;
     }
+
 
     @Override
     public void run() {
+
         try {
             AsynchronousServerSocketChannel serverChannel = AsynchronousServerSocketChannel.open();
             serverChannel.bind(new InetSocketAddress("localhost",port));
@@ -21,11 +26,13 @@ public class Servers implements Runnable {
             Client client = new Client();
             client.server = serverChannel;
             client.rW = "w";
-            if(port == 5000)
+            if(port == 5000){
                 client.connector = "broker";
-            else
+            }
+            else{
                 client.connector = "market";
-            serverChannel.accept(client, new ConnectionHandler());
+            }
+            serverChannel.accept(client, new ConnectionHandler(connectorsLists));
             Thread.currentThread().join();
         }catch (IOException|InterruptedException e){
             e.printStackTrace();

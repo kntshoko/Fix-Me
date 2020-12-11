@@ -12,4 +12,6 @@ public class Client {
     public String rW;
     public String mes;
     public ByteBuffer buffer;
+    public  int id;
+    public  ReadWriteHandler handler;
 }

@@ -7,7 +7,15 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.sql.ClientInfoStatus;
 
-public class ConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, Client> {
+public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketChannel, Client> {
+
+   public int brokerCounter = 99999;
+    public  int marketCounter = 99999;
+    public  ConnectorsLists connectorsLists;
+    public ConnectionHandler(ConnectorsLists connectorsLists) {
+        this.connectorsLists = connectorsLists;
+    }
+
     @Override
     public void completed(AsynchronousSocketChannel socketChannel, Client client) {
 
@@ -21,18 +29,28 @@ public class ConnectionHandler implements CompletionHandler<AsynchronousSocketCh
 
 
         client.server.accept(client, this);
+
         System.out.printf("Accepted a connection from: %s%n", address );
-        ReadWriteHandler handler = new ReadWriteHandler();
-        client.client = socketChannel;
-        client.buffer = ByteBuffer.allocate(1000);
-        System.out.println(client.buffer);
-        if(client.client.isOpen()){
-            client.buffer.clear();
-            client.buffer.flip();
-            socketChannel.write(client.buffer,client,handler);
+        ReadWriteHandler handler = new ReadWriteHandler(connectorsLists);
+        Client newClient = new Client();
+        newClient.client =socketChannel;
+        newClient.connector = client.connector;
+        if(  client.connector.equals("broker")){
+            brokerCounter++;
+            newClient.id = brokerCounter;
         }
-
-
+        else{
+            marketCounter++;
+            newClient.id = marketCounter;
+        }
+        newClient.rW = client.rW;
+        newClient.handler = handler;
+        newClient.buffer = ByteBuffer.allocate(1000);
+        newClient.buffer.clear();
+        newClient.buffer.put(Integer.toString(newClient.id).getBytes());
+        newClient.buffer.flip();
+        connectorsLists.setCounter(newClient.connector,newClient.id,newClient);
+        socketChannel.write(newClient.buffer,newClient,handler);
     }
 
     @Override

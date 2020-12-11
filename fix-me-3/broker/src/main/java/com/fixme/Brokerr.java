@@ -32,22 +32,9 @@ public class Brokerr  extends Thread{
         String serverResponse = null;
         try {
             while (r == 0){
-				/*if (t == 0){
-
-					out.println("start");
-					out.println("start");
-					out.println("start");
 					serverResponse = input.readLine();
-					String[] g = serverResponse.split(":");
-					if (g[0].equals("id")){
-						System.out.println(g[1]);
-						t++;
-					}
-				}
-				else{*/
-					serverResponse = input.readLine();
-					System.out.println(serverResponse);}
-			//}
+					System.out.println(serverResponse);
+            }
 
 		} catch (IOException e) {
 			e.printStackTrace();

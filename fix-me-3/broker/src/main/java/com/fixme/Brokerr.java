@@ -8,53 +8,67 @@ import java.net.Socket;
 
 public class Brokerr  extends Thread{
 
-    private  static  final  String SERVER_IP = "127.0.0.1";
-    private  static  final int SERVER_PORT = 5000;
-    private BufferedReader input;
-    private BufferedReader keyboard;
-    private PrintWriter out;
-    private Socket socket = null;
-    private int r = 0, t = 0;
-    public Brokerr() throws IOException {
+	private  static  final  String SERVER_IP = "127.0.0.1";
+	private  static  final int SERVER_PORT = 5000;
+	private BufferedReader input;
+	private BufferedReader keyboard;
+	private PrintWriter out;
+	private Socket socket = null;
+	private int r = 0, t = 0;
+	public Brokerr() throws IOException {
 
-        try {
-            socket = new Socket(SERVER_IP, SERVER_PORT);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            keyboard = new BufferedReader(new InputStreamReader(System.in));
-            out = new PrintWriter(socket.getOutputStream(), true);
+		try {
+			socket = new Socket(SERVER_IP, SERVER_PORT);
+			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			keyboard = new BufferedReader(new InputStreamReader(System.in));
+			out = new PrintWriter(socket.getOutputStream(), true);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			out.println("Router");
+			out.println("");
+			out.println("");
+			out.println("");
+			out.println("");
 
-    public   void Send(){
-        String serverResponse = null;
-        try {
-            while (r == 0){
-					serverResponse = input.readLine();
-					System.out.println(serverResponse);
-            }
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void run(){
+	public   void run(){
+		String serverResponse = null;
+		try {
+			while (r == 0){
+
+				serverResponse = input.readLine();
+				if(serverResponse.length() > 1)
+					System.out.println("Router response : "+ serverResponse);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void Send(){
 		try {
 
 			while (true){
-				System.out.println("> ");
 				String command = null;
-
+				System.out.println("Enter buy OR sell OR quit To exit");
 				command = keyboard.readLine();
+				if(command.equals("quit")) break;
 
+				/*System.out.println("Enter Item name");
+				command = command + "| "+ keyboard.readLine();
 
-				if(command.equals("quit")) break;;
+				System.out.println("Enter Item Price");
+				command = command + "| "+ keyboard.readLine();
+				System.out.println("Enter Receiver ID");
+				command = command + "| "+ keyboard.readLine();*/
 				out.println(command);
 
-
+				out.println("");
 			}
 			r = 1;
 			socket.close();

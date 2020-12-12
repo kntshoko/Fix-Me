@@ -1,6 +1,7 @@
 package com.fixme;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.StandardCharsets;
 
@@ -27,47 +28,67 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
             byte[] bytes = new byte[ client.buffer.remaining()];
             client.buffer.duplicate().get(bytes);
             String mes = new String(bytes, StandardCharsets.UTF_8);
-            if(l > 0) {
-                if(mes.contains("message")){
+
+            if(mes.contains("Router")){
+                mes = "Router assigns  "+client.connector+" with ID: [" +Integer.toString(client.id)+"]";
+            }
+            if(mes.length() > 1)
+                System.out.println(mes);
+
+
+            if(client.connector.equals("broker")){
+                if(mes.contains("Msg")){
+
+                    System.out.println("*** "+mes);
                     receiver = connectorsLists.getIdConnector(100000, "market");
-                    if (receiver != null){
+                    if(receiver != null){
                         receiver.buffer.clear();
                         receiver.buffer.put(mes.getBytes());
                         receiver.buffer.flip();
-                        receiver.client.write(receiver.buffer, receiver, receiver.handler);
-                        receiver.rW = "r";
-                        client.rW = "r";
+                        client.rW = "w";
+                        receiver.client.write(receiver.buffer, receiver, client.handler);
                     }
-                    else  if(mes.contains("received")){
-                        receiver = connectorsLists.getIdConnector(100000, "broker");
-                        if (receiver != null){
-                            receiver.buffer.clear();
-                            receiver.buffer.put(mes.getBytes());
-                            receiver.buffer.flip();
-                            receiver.client.write(receiver.buffer, receiver, receiver.handler);
-                            client.rW = "r";
-                        }
+                    client.buffer.clear();
+                    client.client.read(client.buffer, client, this);
+                }else{
+                    client.rW = "w";
+                    client.buffer.clear();
+                    client.buffer.put(mes.getBytes());
+                    client.buffer.flip();
+                    client.client.write(client.buffer, client, this);
                 }
-                    else {
-
-                    }
-                }
-                System.out.println(client.connector + " id= "+ client.id + "  says :" + mes);
             }
+            else if(client.connector.equals("market")){
+                if(mes.contains("Msg")){
+
+                    System.out.println("*** "+mes);
+                    receiver = connectorsLists.getIdConnector(100000, "broker");
+                    if(receiver != null){
+                        receiver.buffer.clear();
+                        receiver.buffer.put(mes.getBytes());
+                        receiver.buffer.flip();
+                        client.rW = "w";
+                        receiver.client.write(receiver.buffer, receiver, client.handler);
+                    }
+                    client.buffer.clear();
+                    client.client.read(client.buffer, client, this);
+                }else{
+                    client.rW = "w";
+                    client.buffer.clear();
+                    client.buffer.put(mes.getBytes());
+                    client.buffer.flip();
+                    client.client.write(client.buffer, client, this);
+                }
+            }
+            /*client.rW = "w";
             client.buffer.clear();
             client.buffer.put(mes.getBytes());
             client.buffer.flip();
-            client.rW = "w";
-            if(!client.connector.equals("market")){
-                client.rW = "w";
-                return;
-            }
-            client.mes = mes;
-            client.buffer.clear();
+            client.client.write(ByteBuffer.wrap(mes.getBytes()), client, client.handler);*/
         }else {
-//            client.rW = "r";
-//            client.buffer.clear();
-//            client.client.read(client.buffer, client, this);
+            client.rW = "r";
+            client.buffer.clear();
+            client.client.read(client.buffer, client, this);
         }
     }
 
@@ -75,4 +96,3 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
     public void failed(Throwable exc, Client client) {
 
     }
-}

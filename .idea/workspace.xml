@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02130b18-3a35-41c2-b04a-ece06c31f0bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/src/main/java/com/fixme/Broker.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/src/main/java/com/fixme/Broker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/src/main/java/com/fixme/Brokerr.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/src/main/java/com/fixme/Brokerr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Broker.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Broker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/BrokerConnect.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/BrokerConnect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Brokerr.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Brokerr.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/InputOutputHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/broker/target/classes/com/fixme/InputOutputHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/market/src/main/java/com/fixme/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/market/src/main/java/com/fixme/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/market/target/classes/com/fixme/Market.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/market/target/classes/com/fixme/Market.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/ConnectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/ConnectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/ReadWriteHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/ReadWriteHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Router.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/RouterServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/RouterServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Servers.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Servers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/ConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/ConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/ReadWriteHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/ReadWriteHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Router.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Router.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/RouterServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/RouterServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Servers.class" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/target/classes/com/fixme/Servers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

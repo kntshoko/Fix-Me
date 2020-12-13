@@ -47,8 +47,7 @@ public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketC
         newClient.handler = handler;
         newClient.buffer = ByteBuffer.allocate(1000);
         newClient.buffer.put(("Router assigned ID = "+Integer.toString(newClient.id)).getBytes());
-        newClient.buffer.flip();
-        String message = "Router assigned ID = "+Integer.toString(newClient.id);
+        newClient.buffer.flip();      
         connectorsLists.setCounter(newClient.connector,newClient.id,newClient);
         socketChannel.read(newClient.buffer,newClient,handler);
     }

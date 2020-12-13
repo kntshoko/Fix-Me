@@ -14,7 +14,7 @@ public class Market  extends Thread{
 	private BufferedReader keyboard;
 	private PrintWriter out;
 	private Socket socket = null;
-	private int r = 0, t = 0;
+	private int r = 0;
 	public Market() throws IOException {
 
 		try {
@@ -37,6 +37,9 @@ public class Market  extends Thread{
 				serverResponse = input.readLine();
 				if(serverResponse.length() > 1)
 					System.out.println("Router response : "+ serverResponse);
+				if(serverResponse.contains("8=FIX.4.2")){
+					System.out.println("loooolololoolololol");
+				}
 				out.println("");
 			}
 

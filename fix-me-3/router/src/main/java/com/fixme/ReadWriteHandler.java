@@ -1,7 +1,6 @@
 package com.fixme;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.StandardCharsets;
 
@@ -24,7 +23,6 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
         }
         if(client.rW.equals("r")){
             client.buffer.flip();
-            int l = client.buffer.limit();
             byte[] bytes = new byte[ client.buffer.remaining()];
             client.buffer.duplicate().get(bytes);
             String mes = new String(bytes, StandardCharsets.UTF_8);
@@ -35,9 +33,8 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
 
             if(client.connector.equals("broker")){
                 if(mes.length() > 5)
-                    System.out.println("/////////////////////"+mes);
+                    System.out.println(mes);
                 if(mes.contains("8=FIX.4.2")){
-                    System.out.println("****************");
                     String messageArray[] = mes.split("\\|");
                     System.out.println(java.util.Arrays.toString(messageArray));
                     String[] sId = messageArray[4].split("\\=");
@@ -75,7 +72,7 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
             }
             else if(client.connector.equals("market")){
                 if(mes.length() != 1)
-                    System.out.println("**********"+mes);
+                    System.out.println(mes);
                 if(mes.contains("8=FIX.4.2")){
                     String messageArray[] = mes.split("\\|");
                     System.out.println(java.util.Arrays.toString(messageArray));

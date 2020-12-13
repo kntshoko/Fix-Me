@@ -34,22 +34,38 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
             }
 
             if(client.connector.equals("broker")){
-                if(mes.length() > 2)
-                    System.out.println(mes);
-                if(mes.contains("Msg")){
-                    receiver = connectorsLists.getIdConnector(100000, "market");
+                if(mes.length() > 5)
+                    System.out.println("/////////////////////"+mes);
+                if(mes.contains("8=FIX.4.2")){
+                    System.out.println("****************");
+                    String messageArray[] = mes.split("\\|");
+                    System.out.println(java.util.Arrays.toString(messageArray));
+                    String[] sId = messageArray[4].split("\\=");
+
+                    if (isNumber(sId[1]) == 1)
+                        receiver = connectorsLists.getIdConnector(Integer.parseInt(sId[1]), "market");
                     if(receiver != null){
                         receiver.buffer.clear();
                         receiver.buffer.put(mes.getBytes());
                         receiver.buffer.flip();
                         client.rW = "w";
+                        // receiver.rW = "w";
                         receiver.client.write(receiver.buffer, receiver, client.handler);
                     }else {
+                        client.rW = "w";
                         client.buffer.clear();
                         client.buffer.put(mes.getBytes());
                         client.buffer.flip();
-                        client.client.read(client.buffer, client, this);}
-                }else{
+                        client.client.read(client.buffer, client, this);
+                    }
+                    if (receiver != null){
+                        client.rW = "w";
+                        client.buffer.clear();
+                        client.buffer.put("".getBytes());
+                        client.buffer.flip();
+                        client.client.read(client.buffer, client, this);
+                    }
+                } else{
                     client.rW = "w";
                     client.buffer.clear();
                     client.buffer.put(mes.getBytes());
@@ -58,10 +74,15 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                 }
             }
             else if(client.connector.equals("market")){
-                if(mes.length() > 2)
-                    System.out.println(mes);
-                if(mes.contains("Msg")){
-                    receiver = connectorsLists.getIdConnector(100000, "broker");
+                if(mes.length() != 1)
+                    System.out.println("**********"+mes);
+                if(mes.contains("8=FIX.4.2")){
+                    String messageArray[] = mes.split("\\|");
+                    System.out.println(java.util.Arrays.toString(messageArray));
+                    String[] sId = messageArray[4].split("\\=");
+
+                    if (isNumber(sId[1]) == 1)
+                        receiver = connectorsLists.getIdConnector(Integer.parseInt(sId[1]), "broker");
                     if(receiver != null){
                         receiver.buffer.clear();
                         receiver.buffer.put(mes.getBytes());
@@ -74,19 +95,21 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                         client.buffer.put(mes.getBytes());
                         client.buffer.flip();
                         client.client.read(client.buffer, client, this);}
+                    if (receiver != null){
+                        client.rW = "w";
+                        client.buffer.clear();
+                        client.buffer.put("".getBytes());
+                        client.buffer.flip();
+                        client.client.read(client.buffer, client, this);
+                    }
                 }else{
                     client.rW = "w";
                     client.buffer.clear();
-                    client.buffer.put(mes.getBytes());
+                    client.buffer.put(" ".getBytes());
                     client.buffer.flip();
                     client.client.write(client.buffer, client, this);
                 }
             }
-            /*client.rW = "w";
-            client.buffer.clear();
-            client.buffer.put(mes.getBytes());
-            client.buffer.flip();
-            client.client.write(ByteBuffer.wrap(mes.getBytes()), client, client.handler);*/
         }else {
             client.rW = "r";
             client.buffer.clear();
@@ -97,5 +120,15 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
     @Override
     public void failed(Throwable exc, Client client) {
 
+    }
+
+    public int isNumber(String id){
+        char[] st = id.toCharArray();
+        for(char c : st){
+            if(!Character.isDigit(c)){
+                return 0;
+            }
+        }
+        return 1;
     }
 }

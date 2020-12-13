@@ -87,7 +87,7 @@ public class Brokerr  extends Thread{
 					command = command + "|44="+ keyboard.readLine();
 					int len = command.length();
 					int checkSum = len % 256;
-					command = "|35=" + command;
+					command = "|35=req" + command;
 					command = "|9="+ len + command;
 					if(checkSum> 99)
 						command = command +"|10=" + checkSum;
@@ -102,13 +102,10 @@ public class Brokerr  extends Thread{
 			System.exit(0);} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
-
 	}
 	public static void main(String[] args) throws IOException {
 		Brokerr broke = new Brokerr();
-
 		broke.start();
-
 		broke.Send();
 
 	}

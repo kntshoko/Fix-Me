@@ -35,7 +35,8 @@ public class Servers implements Runnable {
             serverChannel.accept(client, new ConnectionHandler(connectorsLists));
             Thread.currentThread().join();
         }catch (IOException|InterruptedException e){
-            e.printStackTrace();
+            // e.printStackTrace();
+            System.out.println("***************");
         }
     }
 }

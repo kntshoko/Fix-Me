@@ -5,11 +5,11 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
-import java.sql.ClientInfoStatus;
+
 
 public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketChannel, Client> {
 
-   public int brokerCounter = 99999;
+    public int brokerCounter = 99999;
     public  int marketCounter = 99999;
     public  ConnectorsLists connectorsLists;
     public ConnectionHandler(ConnectorsLists connectorsLists) {
@@ -24,7 +24,7 @@ public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketC
         try {
             address = socketChannel.getRemoteAddress();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("**********");
         }
 
 
@@ -43,14 +43,14 @@ public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketC
             marketCounter++;
             newClient.id = marketCounter;
         }
-        newClient.rW = client.rW;
+        newClient.rW = "r";
         newClient.handler = handler;
         newClient.buffer = ByteBuffer.allocate(1000);
-        newClient.buffer.clear();
-        newClient.buffer.put(Integer.toString(newClient.id).getBytes());
+        newClient.buffer.put(("Router assigned ID = "+Integer.toString(newClient.id)).getBytes());
         newClient.buffer.flip();
+        String message = "Router assigned ID = "+Integer.toString(newClient.id);
         connectorsLists.setCounter(newClient.connector,newClient.id,newClient);
-        socketChannel.write(newClient.buffer,newClient,handler);
+        socketChannel.read(newClient.buffer,newClient,handler);
     }
 
     @Override

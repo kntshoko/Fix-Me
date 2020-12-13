@@ -30,16 +30,13 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
             String mes = new String(bytes, StandardCharsets.UTF_8);
 
             if(mes.contains("Router")){
-                mes = "Router assigns  "+client.connector+" with ID: [" +Integer.toString(client.id)+"]";
+                mes = "Router assigns  "+client.connector+" with ID: " +Integer.toString(client.id)+"";
             }
-            if(mes.length() > 1)
-                System.out.println(mes);
-
 
             if(client.connector.equals("broker")){
+                if(mes.length() > 2)
+                    System.out.println(mes);
                 if(mes.contains("Msg")){
-
-                    System.out.println("*** "+mes);
                     receiver = connectorsLists.getIdConnector(100000, "market");
                     if(receiver != null){
                         receiver.buffer.clear();
@@ -47,9 +44,11 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                         receiver.buffer.flip();
                         client.rW = "w";
                         receiver.client.write(receiver.buffer, receiver, client.handler);
-                    }
-                    client.buffer.clear();
-                    client.client.read(client.buffer, client, this);
+                    }else {
+                        client.buffer.clear();
+                        client.buffer.put(mes.getBytes());
+                        client.buffer.flip();
+                        client.client.read(client.buffer, client, this);}
                 }else{
                     client.rW = "w";
                     client.buffer.clear();
@@ -59,9 +58,9 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                 }
             }
             else if(client.connector.equals("market")){
+                if(mes.length() > 2)
+                    System.out.println(mes);
                 if(mes.contains("Msg")){
-
-                    System.out.println("*** "+mes);
                     receiver = connectorsLists.getIdConnector(100000, "broker");
                     if(receiver != null){
                         receiver.buffer.clear();
@@ -69,9 +68,12 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                         receiver.buffer.flip();
                         client.rW = "w";
                         receiver.client.write(receiver.buffer, receiver, client.handler);
-                    }
-                    client.buffer.clear();
-                    client.client.read(client.buffer, client, this);
+
+                    }else {
+                        client.buffer.clear();
+                        client.buffer.put(mes.getBytes());
+                        client.buffer.flip();
+                        client.client.read(client.buffer, client, this);}
                 }else{
                     client.rW = "w";
                     client.buffer.clear();
@@ -96,3 +98,4 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
     public void failed(Throwable exc, Client client) {
 
     }
+}

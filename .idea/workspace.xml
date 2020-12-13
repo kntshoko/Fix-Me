@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="02130b18-3a35-41c2-b04a-ece06c31f0bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Router.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Router.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/RouterServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/RouterServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Servers.java" beforeDir="false" afterPath="$PROJECT_DIR$/fix-me-3/router/src/main/java/com/fixme/Servers.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

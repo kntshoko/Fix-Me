@@ -1,10 +1,8 @@
 package com.fixme;
 
-import java.util.HashMap;
 import java.util.concurrent.*;
 
 public class RouterServer{
-
 
     public void runServers() {
         ConnectorsLists connectorsLists = new ConnectorsLists();
@@ -14,7 +12,3 @@ public class RouterServer{
         serve.shutdown();
     }
 }
-
-/**
- * RouterServer
- */

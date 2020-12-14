@@ -32,16 +32,20 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
             }
 
             if(client.connector.equals("broker")){
-                if(mes.length() > 5)
-                    System.out.println(mes);
+                if(mes.length() > 5){
+                    if(mes.contains("Router assigns  ")){
+                        System.out.println(mes);
+                    }
+                    else if (mes.contains("8=FIX.4.2")){
+                        System.out.println(client.connector+" with id:"+client.id+" says- "+mes);
+                    } 
+                }
                 if(mes.contains("8=FIX.4.2")){
                     String messageArray[] = mes.split("\\|");
                     System.out.println(java.util.Arrays.toString(messageArray));
                     String[] sId = messageArray[4].split("\\=");
 
-
                     if (isNumber(sId[1]) == 1 && (messageArray[2].contains("35=buy") || messageArray[2].contains("35=sell")) == true){
-                        System.out.println("LLLLLLLLLLL");
                         receiver = connectorsLists.getIdConnector(Integer.parseInt(sId[1]), "market");}
                     if(receiver != null){
                         receiver.buffer.clear();
@@ -76,13 +80,18 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
                 }
             }
             else if(client.connector.equals("market")){
-                if(mes.length() != 1)
-                    System.out.println(mes);
+                if(mes.length() > 5){
+                    if(mes.contains("Router assigns  ")){
+                        System.out.println(mes);
+                    }
+                    else{
+                        System.out.println(client.connector+" with id:"+client.id+" says- "+mes);
+                    } 
+                }
                 if(mes.contains("8=FIX.4.2")){
                     String messageArray[] = mes.split("\\|");
-                    System.out.println(java.util.Arrays.toString(messageArray));
+                   // System.out.println(java.util.Arrays.toString(messageArray));
                     String[] sId = messageArray[4].split("\\=");
-                    System.out.println("***************************");
                     if (isNumber(sId[1]) == 1)
                         receiver = connectorsLists.getIdConnector(Integer.parseInt(sId[1]), "broker");
                     if(receiver != null){

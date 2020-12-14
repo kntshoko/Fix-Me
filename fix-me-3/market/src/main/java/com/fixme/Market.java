@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class Market  extends Thread{
 
@@ -15,6 +16,8 @@ public class Market  extends Thread{
 	private PrintWriter out;
 	private Socket socket = null;
 	private int r = 0;
+	private  HashMap<String,  Integer> InstrumentList =
+	new HashMap<String,  Integer>();
 	public Market() throws IOException {
 
 		try {
@@ -23,6 +26,11 @@ public class Market  extends Thread{
 			keyboard = new BufferedReader(new InputStreamReader(System.in));
 			out = new PrintWriter(socket.getOutputStream(), true);
 
+			InstrumentList.put("instrument1", 100);
+			InstrumentList.put("instrument1", 100);
+			InstrumentList.put("instrument1", 100);
+			InstrumentList.put("instrument1", 100);
+			InstrumentList.put("instrument1", 100);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,12 +47,17 @@ public class Market  extends Thread{
 					System.out.println("Router response : "+ serverResponse);
 				if(serverResponse.contains("8=FIX.4.2")){
 					String message[] = serverResponse.split("\\|");
-					System.out.println(java.util.Arrays.toString(message));
-
-					String response = message[0]+"|"+message[1]+"|35=Exeuted"+"|"+message[4]+"|"+message[3]+"|"+message[5]+"|"+message[6]
-					+"|"+message[7]+"|"+message[8]+"|"+message[9];
+					String response = "|35=Exeuted"+"|"+message[4]+"|"+message[3]+"|"+message[5]+"|"+message[6]
+					+"|"+message[7]+"|"+message[8];
+					int messageLength = response.length();
+					int checkSum = messageLength % 256;
+					
+					if(checkSum> 99)
+						response = response +"|10=" + checkSum;
+					else
+						response = response + "|10=0" + checkSum;
+					response = message[0]+"|9="+messageLength+"|"+response;
 					out.println(response);
-					System.out.println("*******************\n"+response+"\n************");
 					out.println("");
 				}
 				out.println("");

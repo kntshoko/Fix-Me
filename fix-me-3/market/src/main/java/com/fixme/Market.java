@@ -38,7 +38,14 @@ public class Market  extends Thread{
 				if(serverResponse.length() > 1)
 					System.out.println("Router response : "+ serverResponse);
 				if(serverResponse.contains("8=FIX.4.2")){
-					System.out.println("loooolololoolololol");
+					String message[] = serverResponse.split("\\|");
+					System.out.println(java.util.Arrays.toString(message));
+
+					String response = message[0]+"|"+message[1]+"|35=Exeuted"+"|"+message[4]+"|"+message[3]+"|"+message[5]+"|"+message[6]
+					+"|"+message[7]+"|"+message[8]+"|"+message[9];
+					out.println(response);
+					System.out.println("*******************\n"+response+"\n************");
+					out.println("");
 				}
 				out.println("");
 			}

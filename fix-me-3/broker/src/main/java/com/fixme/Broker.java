@@ -37,12 +37,13 @@ public class Broker  extends Thread{
 			while (r == 0){
 
 				serverResponse = input.readLine();
-				if(serverResponse.length() > 1)
+				if(serverResponse.length() > 1   && (serverResponse.contains("35=sell") || serverResponse.contains("35=buy" )) == false)
 					System.out.println("Router response : "+ serverResponse);
 				if(serverResponse.contains("Router assigns")){
 					String sp[] = serverResponse.split(":");
 					id = Integer.parseInt(sp[1].trim());
 				}
+				out.println("");
 
 			}
 
@@ -63,15 +64,18 @@ public class Broker  extends Thread{
 				t=0;
 				String command = null;
 				String input;
+				String msgType = null;
 				System.out.println("Enter buy OR sell OR quit To exit");
 				input = keyboard.readLine();
 				if(input.equals("quit")) break;
 				if(input.equalsIgnoreCase("buy")){
 					input = "|54=1";
+					msgType = "buy";
 					t++;
 				}
 				else if(input.equalsIgnoreCase("sell")){
 					input = "|54=2";
+					msgType = "sell";
 					t++;
 				}
 				if(t == 1){
@@ -87,13 +91,13 @@ public class Broker  extends Thread{
 					command = command + "|44="+ keyboard.readLine();
 					int len = command.length();
 					int checkSum = len % 256;
-					command = "|35=req" + command;
+					command = "|35="+ msgType + command;
 					command = "|9="+ len + command;
 					if(checkSum> 99)
 						command = command +"|10=" + checkSum;
 					else
 						command = command + "|10=0" + checkSum;
-					command = "8=FIX.4.2"+command;
+					command = "8=FIX.4.2 "+command;
 					out.println(command);
 					out.println("");}
 			}

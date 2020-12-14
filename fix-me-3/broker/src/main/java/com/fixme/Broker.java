@@ -22,10 +22,6 @@ public class Broker  extends Thread{
 			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			keyboard = new BufferedReader(new InputStreamReader(System.in));
 			out = new PrintWriter(socket.getOutputStream(), true);
-
-
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -84,11 +80,27 @@ public class Broker  extends Thread{
 					command = command + "|56="+ keyboard.readLine();
 					command = command + input;
 					System.out.println("Enter Instrument");
-					command = command + "|37="+ keyboard.readLine();
-					System.out.println("Enter Instrument Quantity");
-					command = command + "|38="+ keyboard.readLine();
-					System.out.println("Enter Instrument Price");
-					command = command + "|44="+ keyboard.readLine();
+					command = command + "|37="+ keyboard.readLine().toLowerCase();
+					int i= 0;
+					while (i == 0) {
+						System.out.println("Enter Instrument Quantity");
+						String num = null;
+						num = keyboard.readLine();
+						if(isNumber(num) == 1){
+						command = command + "|38="+ num ;
+						i++;
+						}
+					}
+					i = 0;
+					while (i == 0) {
+						System.out.println("Enter Instrument Price");
+						String num = null;
+						num = keyboard.readLine();
+						if(isNumber(num) == 1){
+						command = command + "|44="+ num ;
+						i++;
+						}
+					}
 					int len = command.length();
 					int checkSum = len % 256;
 					command = "|35="+ msgType + command;
@@ -113,4 +125,14 @@ public class Broker  extends Thread{
 		broke.Send();
 
 	}
+
+	public int isNumber(String id){
+        char[] st = id.toCharArray();
+        for(char c : st){
+            if(!Character.isDigit(c)){
+                return 0;
+            }
+        }
+        return 1;
+    }
 }

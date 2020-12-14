@@ -26,11 +26,11 @@ public class Market  extends Thread{
 			keyboard = new BufferedReader(new InputStreamReader(System.in));
 			out = new PrintWriter(socket.getOutputStream(), true);
 
-			InstrumentList.put("instrument1", 100);
-			InstrumentList.put("instrument1", 100);
-			InstrumentList.put("instrument1", 100);
-			InstrumentList.put("instrument1", 100);
-			InstrumentList.put("instrument1", 100);
+			InstrumentList.put("mazie", 100);
+			InstrumentList.put("rice", 100);
+			InstrumentList.put("beans", 100);
+			InstrumentList.put("meat", 100);
+			InstrumentList.put("eggs", 100);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -45,9 +45,41 @@ public class Market  extends Thread{
 				serverResponse = input.readLine();
 				if(serverResponse.length() > 1)
 					System.out.println("Router response : "+ serverResponse);
+					String response = null;
 				if(serverResponse.contains("8=FIX.4.2")){
 					String message[] = serverResponse.split("\\|");
-					String response = "|35=Exeuted"+"|"+message[4]+"|"+message[3]+"|"+message[5]+"|"+message[6]
+					
+					if(serverResponse.contains("|35=buy")){
+						String item[] = message[7].split("=");
+						String quntity[] = message[9].split("=");
+						if(InstrumentList.get(item[1]) != null){
+							int itemQuntity = InstrumentList.get(item[1]);
+							int inQuality =Integer.parseInt(quntity[1]);
+							if(itemQuntity > inQuality){
+								response = "|35=Exeuted";
+								InstrumentList.put(item[1],inQuality - itemQuntity );
+							}else{
+								response = "|35=Reject";
+							}
+
+						}
+					}else	if(serverResponse.contains("|35=sell")){
+						String item[] = message[7].split("=");
+						String quntity[] = message[9].split("=");
+						
+						if(InstrumentList.get(item[1]) != null){
+							int itemQuntity = InstrumentList.get(item[1]);
+							int inQuality =Integer.parseInt(quntity[1]);
+							if(itemQuntity >  inQuality){
+								response = "|35=Exeuted";
+								InstrumentList.put(item[1],inQuality + itemQuntity );
+							}
+
+						}else{
+								response = "|35=Reject";
+						}
+					}
+					response = response + "|"+message[4]+"|"+message[3]+"|"+message[5]+"|"+message[6]
 					+"|"+message[7]+"|"+message[8];
 					int messageLength = response.length();
 					int checkSum = messageLength % 256;
@@ -61,6 +93,7 @@ public class Market  extends Thread{
 					out.println("");
 				}
 				out.println("");
+				System.out.println(InstrumentList);
 			}
 
 		} catch (IOException e) {

@@ -127,13 +127,17 @@ class ReadWriteHandler implements CompletionHandler<Integer, Client> {
         }else {
             client.rW = "r";
             client.buffer.clear();
-            client.client.read(client.buffer, client, this);
+            try {
+                client.client.read(client.buffer, client, this);
+            } catch (Exception e) {
+                System.out.print("");
+            }
         }
     }
 
     @Override
     public void failed(Throwable exc, Client client) {
-
+        System.out.println("...");
     }
 
     public int isNumber(String id){

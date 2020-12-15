@@ -93,7 +93,7 @@ public class Market  extends Thread{
 					out.println("");
 				}
 				out.println("");
-				System.out.println(InstrumentList);
+				
 			}
 
 		} catch (IOException e) {
@@ -109,6 +109,7 @@ public class Market  extends Thread{
 			out.println("");
 			while (true){
 				String command = null;
+				System.out.println(InstrumentList);
 				System.out.println("Enter quit To exit");
 				command = keyboard.readLine();
 				if(command.equals("quit")) break;

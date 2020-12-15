@@ -54,6 +54,6 @@ public class ConnectionHandler  implements CompletionHandler<AsynchronousSocketC
 
     @Override
     public void failed(Throwable exc, Client attachment) {
-
+        System.out.println("...");
     }
 }

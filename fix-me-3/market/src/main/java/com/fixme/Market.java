@@ -50,12 +50,13 @@ public class Market  extends Thread{
 					String message[] = serverResponse.split("\\|");
 					
 					if(serverResponse.contains("|35=buy")){
-						String item[] = message[7].split("=");
-						String quntity[] = message[9].split("=");
+						String item[] = message[6].split("\\=");
+						String quntity[] = message[7].split("\\=");
 						if(InstrumentList.get(item[1]) != null){
 							int itemQuntity = InstrumentList.get(item[1]);
 							int inQuality =Integer.parseInt(quntity[1]);
-							if(itemQuntity > inQuality){
+							if(itemQuntity >= inQuality){
+
 								response = "|35=Exeuted";
 								InstrumentList.put(item[1],inQuality - itemQuntity );
 							}else{
@@ -64,8 +65,8 @@ public class Market  extends Thread{
 
 						}
 					}else	if(serverResponse.contains("|35=sell")){
-						String item[] = message[7].split("=");
-						String quntity[] = message[9].split("=");
+						String item[] = message[6].split("\\=");
+						String quntity[] = message[7].split("\\=");
 						
 						if(InstrumentList.get(item[1]) != null){
 							int itemQuntity = InstrumentList.get(item[1]);
@@ -84,7 +85,7 @@ public class Market  extends Thread{
 					int messageLength = response.length();
 					int checkSum = messageLength % 256;
 					
-					if(checkSum> 99)
+					if(checkSum > 99)
 						response = response +"|10=" + checkSum;
 					else
 						response = response + "|10=0" + checkSum;

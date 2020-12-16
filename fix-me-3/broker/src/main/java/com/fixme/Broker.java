@@ -30,6 +30,9 @@ public class Broker  extends Thread{
 	public   void run(){
 		String serverResponse = null;
 		try {
+			out.println("Router");
+			out.println("");
+			out.println("");
 			while (r == 0){
 
 				serverResponse = input.readLine();
@@ -38,6 +41,8 @@ public class Broker  extends Thread{
 				if(serverResponse.contains("Router assigns")){
 					String sp[] = serverResponse.split(":");
 					id = Integer.parseInt(sp[1].trim());
+					System.out.println(id);
+					System.out.println(id);
 				}
 				out.println("");
 
@@ -50,11 +55,7 @@ public class Broker  extends Thread{
 
 	public void Send(){
 		try {
-
-			out.println("Router");
-			out.println("");
-			sleep(200);
-			out.println("");
+			
 			int t = 0;
 			while (true){
 				t=0;
@@ -109,15 +110,15 @@ public class Broker  extends Thread{
 						command = command +"|10=" + checkSum;
 					else
 						command = command + "|10=0" + checkSum;
-					command = "8=FIX.4.2 "+command;
+					command = "8=FIX.4.2"+command;
 					out.println(command);
-					out.println("");}
+					}
 			}
 			r = 1;
 			socket.close();
-			System.exit(0);} catch (IOException | InterruptedException e) {
+			System.exit(0);} catch (IOException  e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	public static void main(String[] args) throws IOException {
 		Broker broke = new Broker();

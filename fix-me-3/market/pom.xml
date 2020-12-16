@@ -26,11 +26,7 @@
 			<artifactId>maven-dependency-plugin</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>at.favre.lib</groupId>
-			<artifactId>bcrypt</artifactId>
-			<version>0.8.0</version>
-		</dependency> -->
+		
 	</dependencies>
 
 	<build>
@@ -40,19 +36,6 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.1.1</version>
 				<executions>
-					<!-- <execution>
-						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution> -->
 				</executions>
 			</plugin>
 			<plugin>
